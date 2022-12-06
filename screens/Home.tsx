@@ -1,13 +1,19 @@
-import React from 'react';
-import { Image, ImageBackground, StyleSheet, Text, Pressable, View } from 'react-native';
+import React, { useState } from 'react';
+import { Image, ImageBackground, StyleSheet, Text, Pressable, View, TouchableWithoutFeedback } from 'react-native';
 
 const Home = () => {
+    const [golds, setGolds] = useState(0);
+
+    const handleAdd = () => {
+        setGolds(1+golds);
+    }
+
     return (
         <View nativeID='container' style={styles.container}>
-            <ImageBackground source={require('../assets/twitch.png')} >
-                <Pressable onPress={() => {}} style={styles.twitch}>
-                </Pressable>    
-            </ImageBackground>
+             <TouchableWithoutFeedback onPress={handleAdd}>
+                <Image source={require('../assets/twitch.png')} style={{ minWidth: '256px', minHeight: '256px'}}/>
+             </TouchableWithoutFeedback>
+            <Text style={{ color: 'white' }}>Golds {golds}</Text>
             <Text nativeID='counter' style={{ color: '#fff' }}></Text>
         </View>
     );
