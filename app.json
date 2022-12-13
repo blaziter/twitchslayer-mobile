@@ -12,22 +12,36 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/2bc94065-5ff6-4d94-a16d-cf407a05a906"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.Twitchslayer"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.anonymous.Twitchslayer"
     },
     "web": {
       "favicon": "./assets/icon.png"
+    },
+    "plugins": [
+      "sentry-expo"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2bc94065-5ff6-4d94-a16d-cf407a05a906"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

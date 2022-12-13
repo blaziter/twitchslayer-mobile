@@ -1,12 +1,80 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { increment } from '../redux/reducers/championsReducer';
+
+interface ChampionProps {
+    title: string,
+    price: number,
+    count: number,
+    type: string,
+    image: string
+}
 
 const Champions = () => {
-    return (
-        <View style={styles.container}>
-            <Text style={{ color: '#fff' }}>Champions</Text>
+    const dispatch = useAppDispatch();
+    const champions = useAppSelector(state => state.champions);
+    const golds = useAppSelector(state => state.golds.value);
+
+    const DATA = champions.champions.map(champion => {
+        return {
+            id: champion.id,
+            name: champion.name,
+            price: champion.price,
+            count: champion.count,
+            type: champion.type,
+            image: champion.image
+        }
+    })
+
+    interface renderProps {
+        item: {
+            id: number,
+            name: string,
+            price: number,
+            count: number,
+            type: string,
+            image: string
+        }
+    }
+
+    const Champion = ({ title, price, count, type, image }: ChampionProps) => (
+        <View style={styles.champion}>
+            <TouchableWithoutFeedback onPress={() => dispatch(increment(title.toLowerCase()))}>
+                <Image source={require(`../assets/champion/${image}`)} style={styles.icon} />
+            </TouchableWithoutFeedback>
+            <View style={styles.championData}>
+                <Text style={styles.name}>{title}, {type}</Text>
+                <Text style={styles.price}>{price} golds</Text>
+                <Text style={styles.price}>{count} owned</Text>
+            </View>
+
+            <TouchableWithoutFeedback onPress={() => dispatch(increment(title.toLowerCase()))}>
+                <View style={styles.buyButton}>
+                    <Text style={{ color: '#fff', textAlign: 'center' }}>Buy {title}</Text>
+                </View>
+            </TouchableWithoutFeedback>
         </View>
     );
+
+    const renderChampion = ({ item }: renderProps) => (
+        <Champion title={item.name} price={item.price} count={item.count} type={item.type} image={item.image} />
+    );
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={styles.goldsContainer}>
+                <Text style={styles.golds}>
+                    Golds: {golds}
+                </Text>
+            </View>
+            <FlatList
+                data={DATA}
+                renderItem={renderChampion}
+                style={styles.championContainer}
+            />
+        </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -16,6 +84,58 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    goldsContainer: {
+        width: '100%',
+        marginBottom: 10,
+        marginTop: 10
+    },
+    golds: {
+        backgroundColor: '#1E1E1E',
+        marginLeft: 10,
+        marginRight: 10,
+        padding: 10,
+        color: '#fff',
+        textAlign: 'center'
+    },
+    championContainer: {
+        width: '100%',
+        height: 100,
+    },
+    icon: {
+        width: 64,
+        height: 64,
+        minHeight: 64,
+        minWidth: 64,
+    },
+    champion: {
+        backgroundColor: '#1E1E1E',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 20
+    },
+    championData: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginLeft: 25,
+        marginRight: 10,
+    },
+    buyButton: {
+        color: '#fff',
+        backgroundColor: '#D93644',
+        padding: 10,
+        marginLeft: 'auto',
+        minWidth: 125
+    },
+    price: {
+        color: '#fff',
+    },
+    name: {
+        color: '#fff',
+    }
 });
 
 export default Champions;

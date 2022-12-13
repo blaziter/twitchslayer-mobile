@@ -1,20 +1,49 @@
 import React, { useState } from 'react';
 import { Image, ImageBackground, StyleSheet, Text, Pressable, View, TouchableWithoutFeedback } from 'react-native';
+import { useAppSelector, useAppDispatch } from '../redux/hooks';
+import { increment } from '../redux/reducers/goldsReducer';
 
 const Home = () => {
-    const [golds, setGolds] = useState(0);
-
-    const handleAdd = () => {
-        setGolds(1+golds);
-    }
+    const golds = useAppSelector(state => state.golds.value);
+    const dispatch = useAppDispatch();
 
     return (
         <View nativeID='container' style={styles.container}>
-             <TouchableWithoutFeedback onPress={handleAdd}>
-                <Image source={require('../assets/twitch.png')} style={{ minWidth: '256px', minHeight: '256px'}}/>
-             </TouchableWithoutFeedback>
-            <Text style={{ color: 'white' }}>Golds {golds}</Text>
-            <Text nativeID='counter' style={{ color: '#fff' }}></Text>
+            <View nativeID='golds-container' style={styles.goldContainer}>
+                <View nativeID='golds' style={styles.golds}>
+                    <Text nativeID='counter' style={styles.counter}>Golds {golds}</Text>
+                    <Text nativeID='gps' style={styles.gps}>Golds per second: 0</Text>
+                </View>
+            </View>
+            <TouchableWithoutFeedback onPress={() => dispatch(increment())}>
+                <Image source={require('../assets/skins/Twitch_0.jpg')} style={styles.twitch} />
+            </TouchableWithoutFeedback>
+            <View nativeID='items-spells' style={styles.itemsSpells}>
+                <View nativeID='items'>
+                    <Text nativeID='items-text' style={styles.itemsText}>Items</Text>
+                    <View nativeID='items-container' style={styles.itemsContainer}>
+                        <View nativeID='item-row' style={styles.itemRow}>
+                            <View nativeID='item' style={styles.item}></View>
+                            <View nativeID='item' style={styles.item}></View>
+                            <View nativeID='item' style={styles.item}></View>
+                        </View>
+                        <View nativeID='item-row' style={styles.itemRow}>
+                            <View nativeID='item' style={styles.item}></View>
+                            <View nativeID='item' style={styles.item}></View>
+                            <View nativeID='item' style={styles.item}></View>
+                        </View>
+                    </View>
+                </View>
+                <View nativeID='spells'>
+                    <Text nativeID='spells-text' style={styles.spellsText}>Spells</Text>
+                    <View nativeID='spells-container' style={styles.spellsContainer}>
+                        <View nativeID='spell' style={styles.spell}></View>
+                        <View nativeID='spell' style={styles.spell}></View>
+                        <View nativeID='spell' style={styles.spell}></View>
+                        <View nativeID='spell' style={styles.spell}></View>
+                    </View>
+                </View>
+            </View>
         </View>
     );
 }
@@ -26,9 +55,71 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    twitch: {
-        
+    goldContainer: {
+        width: '100%',
+        marginBottom: 125,
     },
+    golds: {
+        backgroundColor: '#1E1E1E',
+        marginRight: 10,
+        marginLeft: 10,
+        padding: 10
+    },
+    twitch: {
+        minWidth: 256,
+        width: 256,
+        minHeight: 256,
+        height: 256,
+    },
+    counter: {
+        color: '#fff',
+        fontFamily: 'Spiegel-Regular',
+        textAlign: 'center'
+    },
+    gps: {
+        color: '#fff',
+        fontFamily: 'Spiegel-Regular-Italic',
+        textAlign: 'center'
+    },
+    itemsSpells: {
+        display: 'flex',
+        marginTop: 125,
+        width: '100%',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    itemsText: {
+        color: '#fff',
+        textAlign: 'center',
+    },
+    itemsContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+    },
+    itemRow: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    item: {
+        width: 64,
+        height: 64,
+        backgroundColor: '#fff',
+    },
+    spellsText: {
+        color: '#fff',
+        textAlign: 'center',
+    },
+    spellsContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    spell: {
+        width: 64,
+        height: 64,
+        backgroundColor: '#fff',
+    }
 });
 
 export default Home;
