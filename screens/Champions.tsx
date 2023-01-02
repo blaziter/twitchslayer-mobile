@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { increment } from '../redux/reducers/championsReducer';
+import { FlashList } from "@shopify/flash-list";
 
 interface ChampionProps {
     title: string,
@@ -39,9 +40,9 @@ const Champions = () => {
     }
 
     const Champion = ({ title, price, count, type, image }: ChampionProps) => (
-        <View style={styles.champion}>
+        <SafeAreaView style={styles.champion}>
             <TouchableWithoutFeedback onPress={() => dispatch(increment(title.toLowerCase()))}>
-                <Image source={require(`../assets/champion/${image}`)} style={styles.icon} />
+                <Image source={require(`../assets/champion/Aatrox.png`)} style={styles.icon} />
             </TouchableWithoutFeedback>
             <View style={styles.championData}>
                 <Text style={styles.name}>{title}, {type}</Text>
@@ -54,7 +55,7 @@ const Champions = () => {
                     <Text style={{ color: '#fff', textAlign: 'center' }}>Buy {title}</Text>
                 </View>
             </TouchableWithoutFeedback>
-        </View>
+        </SafeAreaView>
     );
 
     const renderChampion = ({ item }: renderProps) => (
@@ -71,6 +72,8 @@ const Champions = () => {
             <FlatList
                 data={DATA}
                 renderItem={renderChampion}
+                windowSize={5}
+                maxToRenderPerBatch={10}
                 style={styles.championContainer}
             />
         </SafeAreaView>
