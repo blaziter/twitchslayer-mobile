@@ -5,11 +5,13 @@ import type { RootState } from '../store'
 // Define a type for the slice state
 interface GoldsState {
     value: number
+    gps: number
 }
 
 // Define the initial state using that type
 const initialState: GoldsState = {
     value: 0,
+    gps: 0
 }
 
 export const goldsSlice = createSlice({
@@ -20,6 +22,9 @@ export const goldsSlice = createSlice({
         increment: (state) => {
             state.value += 1
         },
+        addGps: (state, action: PayloadAction<number>) => {
+            state.gps += action.payload
+        },
         decrement: (state) => {
             state.value -= 1
         },
@@ -29,11 +34,12 @@ export const goldsSlice = createSlice({
         },
         decrementByAmount: (state, action: PayloadAction<number>) => {
             state.value -= action.payload
+            state.value = Math.round(state.value * 100) / 100
         }
     },
 })
 
-export const { increment, decrement, incrementByAmount, decrementByAmount } = goldsSlice.actions
+export const { increment, addGps, decrement, incrementByAmount, decrementByAmount } = goldsSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.golds.value

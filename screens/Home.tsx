@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, ImageBackground, StyleSheet, Text, Pressable, View, TouchableWithoutFeedback } from 'react-native';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { increment } from '../redux/reducers/goldsReducer';
+import { increment, incrementByAmount } from '../redux/reducers/goldsReducer';
 
 const Home = () => {
     const golds = useAppSelector(state => state.golds.value);
+    const gps = useAppSelector(state => state.golds.gps);
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            dispatch(incrementByAmount(gps))
+        }, 1000)
+        return () => clearInterval(interval)
+    })
 
     return (
         <View nativeID='container' style={styles.container}>
@@ -23,24 +31,44 @@ const Home = () => {
                     <Text nativeID='items-text' style={styles.itemsText}>Items</Text>
                     <View nativeID='items-container' style={styles.itemsContainer}>
                         <View nativeID='item-row' style={styles.itemRow}>
-                            <View nativeID='item' style={styles.item}></View>
-                            <View nativeID='item' style={styles.item}></View>
-                            <View nativeID='item' style={styles.item}></View>
+                            <View nativeID='item' style={styles.item}>
+                                <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                            </View>
+                            <View nativeID='item' style={styles.item}>
+                                <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                            </View>
+                            <View nativeID='item' style={styles.item}>
+                                <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                            </View>
                         </View>
                         <View nativeID='item-row' style={styles.itemRow}>
-                            <View nativeID='item' style={styles.item}></View>
-                            <View nativeID='item' style={styles.item}></View>
-                            <View nativeID='item' style={styles.item}></View>
+                            <View nativeID='item' style={styles.item}>
+                                <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                            </View>
+                            <View nativeID='item' style={styles.item}>
+                                <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                            </View>
+                            <View nativeID='item' style={styles.item}>
+                                <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                            </View>
                         </View>
                     </View>
                 </View>
                 <View nativeID='spells'>
                     <Text nativeID='spells-text' style={styles.spellsText}>Spells</Text>
                     <View nativeID='spells-container' style={styles.spellsContainer}>
-                        <View nativeID='spell' style={styles.spell}></View>
-                        <View nativeID='spell' style={styles.spell}></View>
-                        <View nativeID='spell' style={styles.spell}></View>
-                        <View nativeID='spell' style={styles.spell}></View>
+                        <View nativeID='spell' style={styles.spell}>
+                            <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                        </View>
+                        <View nativeID='spell' style={styles.spell}>
+                            <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                        </View>
+                        <View nativeID='spell' style={styles.spell}>
+                            <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                        </View>
+                        <View nativeID='spell' style={styles.spell}>
+                            <Image style={styles.icon} source={require('../assets/item/7050.png')} />
+                        </View>
                     </View>
                 </View>
             </View>
@@ -49,6 +77,10 @@ const Home = () => {
 }
 
 const styles = StyleSheet.create({
+    icon: {
+        width: 64,
+        height: 64
+    },
     container: {
         flex: 1,
         backgroundColor: '#0D0D0D',
@@ -103,9 +135,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     item: {
-        width: 64,
-        height: 64,
-        backgroundColor: '#fff',
+        width: 66,
+        height: 66,
+        borderColor: '#fff',
+        borderWidth: 1
     },
     spellsText: {
         color: '#fff',
@@ -116,9 +149,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     spell: {
-        width: 64,
-        height: 64,
-        backgroundColor: '#fff',
+        width: 66,
+        height: 66,
+        borderColor: '#fff',
+        borderWidth: 1
     }
 });
 

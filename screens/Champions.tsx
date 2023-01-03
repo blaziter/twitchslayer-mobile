@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { add } from '../redux/reducers/championsReducer';
+import { decrementByAmount } from '../redux/reducers/goldsReducer';
 
 interface ChampionProps {
     title: string,
@@ -40,7 +41,12 @@ const Champions = () => {
 
     const Champion = ({ title, price, count, type, image }: ChampionProps) => (
         <SafeAreaView style={styles.champion}>
-            <TouchableWithoutFeedback onPress={() => dispatch(add(title))}>
+            <TouchableWithoutFeedback onPress={() => {
+                if (golds >= price) {
+                    dispatch(decrementByAmount(price))
+                    dispatch(add(title))
+                }
+            }}>
                 <Image source={require(`../assets/champion/${image}`)} style={styles.icon} />
             </TouchableWithoutFeedback>
             <View style={styles.championData}>
@@ -49,7 +55,12 @@ const Champions = () => {
                 <Text style={styles.price}>{count} owned</Text>
             </View>
 
-            <TouchableWithoutFeedback onPress={() => dispatch(add(title))}>
+            <TouchableWithoutFeedback onPress={() => {
+                if (golds >= price) {
+                    dispatch(decrementByAmount(price))
+                    dispatch(add(title))
+                }
+            }}>
                 <View style={styles.buyButton}>
                     <Text style={{ color: '#fff', textAlign: 'center' }}>Buy {title}</Text>
                 </View>
