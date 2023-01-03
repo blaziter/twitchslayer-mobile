@@ -10,6 +10,8 @@ const Home = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
+            console.log('adding')
+            console.log(gps)
             dispatch(incrementByAmount(gps))
         }, 1000)
         return () => clearInterval(interval)

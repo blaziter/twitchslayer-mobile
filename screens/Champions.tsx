@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { add } from '../redux/reducers/championsReducer';
-import { decrementByAmount } from '../redux/reducers/goldsReducer';
+import { addGps, decrementByAmount } from '../redux/reducers/goldsReducer';
 
 interface ChampionProps {
     title: string,
     price: number,
     count: number,
     type: string,
-    image: string
+    image: string,
+    gps: number,
+    baseGps: number
 }
 
 const Champions = () => {
@@ -24,7 +26,9 @@ const Champions = () => {
             price: champion.price,
             count: champion.count,
             type: champion.type,
-            image: champion.image
+            image: champion.image,
+            gps: champion.gps,
+            baseGps: champion.baseGps
         }
     })
 
@@ -35,15 +39,18 @@ const Champions = () => {
             price: number,
             count: number,
             type: string,
-            image: string
+            image: string,
+            gps: number,
+            baseGps: number
         }
     }
 
-    const Champion = ({ title, price, count, type, image }: ChampionProps) => (
+    const Champion = ({ title, price, count, type, image, gps, baseGps }: ChampionProps) => (
         <SafeAreaView style={styles.champion}>
             <TouchableWithoutFeedback onPress={() => {
                 if (golds >= price) {
                     dispatch(decrementByAmount(price))
+                    dispatch(addGps(gps))
                     dispatch(add(title))
                 }
             }}>
@@ -58,6 +65,7 @@ const Champions = () => {
             <TouchableWithoutFeedback onPress={() => {
                 if (golds >= price) {
                     dispatch(decrementByAmount(price))
+                    dispatch(addGps(baseGps))
                     dispatch(add(title))
                 }
             }}>
@@ -69,7 +77,7 @@ const Champions = () => {
     );
 
     const renderChampion = ({ item }: renderProps) => (
-        <Champion title={item.name} price={item.price} count={item.count} type={item.type} image={item.image} />
+        <Champion title={item.name} price={item.price} count={item.count} type={item.type} image={item.image} gps={item.gps} baseGps={item.baseGps} />
     );
 
     return (

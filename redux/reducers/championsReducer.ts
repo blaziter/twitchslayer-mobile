@@ -11,7 +11,9 @@ interface ChampionsState {
         price: number,
         count: number,
         type: string,
-        image: string
+        image: string,
+        gps: number,
+        baseGps: number
     }[]
 }
 
@@ -27,6 +29,7 @@ export const championsSlice = createSlice({
             const champion = state.champions.find(champion => champion.name === action.payload)
             if (champion) {
                 champion.count += 1
+                champion.gps += champion.baseGps
                 champion.price = Math.round(champion.price * 120) / 100
             }
         }
