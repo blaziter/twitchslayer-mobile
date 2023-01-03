@@ -23,16 +23,17 @@ export const championsSlice = createSlice({
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
-        increment: (state, action: PayloadAction<string>) => {
+        add: (state, action: PayloadAction<string>) => {
             const champion = state.champions.find(champion => champion.name === action.payload)
             if (champion) {
                 champion.count += 1
+                champion.price = Math.round(champion.price * 120) / 100
             }
         }
     },
 })
 
-export const { increment } = championsSlice.actions
+export const { add } = championsSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.golds.value

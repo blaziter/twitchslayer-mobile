@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { increment } from '../redux/reducers/championsReducer';
-import { FlashList } from "@shopify/flash-list";
+import { add } from '../redux/reducers/championsReducer';
 
 interface ChampionProps {
     title: string,
@@ -41,8 +40,8 @@ const Champions = () => {
 
     const Champion = ({ title, price, count, type, image }: ChampionProps) => (
         <SafeAreaView style={styles.champion}>
-            <TouchableWithoutFeedback onPress={() => dispatch(increment(title.toLowerCase()))}>
-                <Image source={require(`../assets/champion/Aatrox.png`)} style={styles.icon} />
+            <TouchableWithoutFeedback onPress={() => dispatch(add(title))}>
+                <Image source={require(`../assets/champion/${image}`)} style={styles.icon} />
             </TouchableWithoutFeedback>
             <View style={styles.championData}>
                 <Text style={styles.name}>{title}, {type}</Text>
@@ -50,7 +49,7 @@ const Champions = () => {
                 <Text style={styles.price}>{count} owned</Text>
             </View>
 
-            <TouchableWithoutFeedback onPress={() => dispatch(increment(title.toLowerCase()))}>
+            <TouchableWithoutFeedback onPress={() => dispatch(add(title))}>
                 <View style={styles.buyButton}>
                     <Text style={{ color: '#fff', textAlign: 'center' }}>Buy {title}</Text>
                 </View>
