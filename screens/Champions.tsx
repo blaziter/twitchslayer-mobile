@@ -50,7 +50,7 @@ const Champions = () => {
             <TouchableWithoutFeedback onPress={() => {
                 if (golds >= price) {
                     dispatch(decrementByAmount(price))
-                    dispatch(addGps(gps))
+                    dispatch(addGps(baseGps))
                     dispatch(add(title))
                 }
             }}>
