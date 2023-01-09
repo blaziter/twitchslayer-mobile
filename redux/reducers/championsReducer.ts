@@ -21,7 +21,7 @@ interface ChampionsState {
 const initialState: ChampionsState = champions;
 
 export const championsSlice = createSlice({
-    name: 'value',
+    name: 'champions',
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
