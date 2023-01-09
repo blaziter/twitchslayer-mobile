@@ -16,7 +16,8 @@ interface GoldsState {
     inventory: {
         id: number
         image: ImageSourcePropType
-    }[]
+    }[],
+    skin: string
 }
 
 interface Inventory {
@@ -34,7 +35,8 @@ const initialState: GoldsState = {
     inventoryCount: 0,
     AH: 0,
     crit: 0,
-    inventory: []
+    inventory: [],
+    skin: 'twitch0'
 }
 
 export const goldsSlice = createSlice({
@@ -88,6 +90,9 @@ export const goldsSlice = createSlice({
         removeInventory: (state) => {
             while (state.inventory.length > 0) state.inventory.pop()
         },
+        currentSkin: (state, action: PayloadAction<string>) => {
+            state.skin = action.payload
+        },
         decrementByAmount: (state, action: PayloadAction<number>) => {
             state.value -= action.payload
             state.value = Math.round(state.value * 100) / 100
@@ -95,7 +100,7 @@ export const goldsSlice = createSlice({
     },
 })
 
-export const { addGps, increment, incrementAD, incrementAP, incrementInv, decrement, incrementClick, incrementByAmount, incrementByGps, incrementByAH, incrementByCrit, incrementByAD, incrementByAP, addInventory, removeInventory, decrementByAmount } = goldsSlice.actions
+export const { addGps, increment, incrementAD, incrementAP, incrementInv, decrement, incrementClick, incrementByAmount, incrementByGps, incrementByAH, incrementByCrit, incrementByAD, incrementByAP, addInventory, removeInventory, currentSkin, decrementByAmount } = goldsSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.golds.value

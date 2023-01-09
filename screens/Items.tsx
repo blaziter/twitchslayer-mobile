@@ -71,6 +71,7 @@ const Items = () => {
                         type == 'AD' ? dispatch(incrementByAD(dmg)) : dispatch(incrementByAP(dmg))
                         if (inventoryCount < 7) {
                             dispatch(addInventory({ id, image }))
+                            dispatch(decrementByAmount(price))
                             dispatch(incrementByCrit(crit))
                             dispatch(incrementByAH(AH))
                             dispatch(incrementInv())
@@ -94,6 +95,7 @@ const Items = () => {
                     type == 'AD' ? dispatch(incrementByAD(dmg)) : dispatch(incrementByAP(dmg))
                     if (inventoryCount < 7) {
                         dispatch(addInventory({ id, image }))
+                        dispatch(decrementByAmount(price))
                         dispatch(incrementByCrit(crit))
                         dispatch(incrementByAH(AH))
                         dispatch(incrementInv())

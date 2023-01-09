@@ -3,6 +3,8 @@ import { Image, StyleSheet, Text, View, TouchableWithoutFeedback, ImageEditor } 
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { increment, incrementByAmount, incrementByGps } from '../redux/reducers/goldsReducer';
 import { formatNumber } from '../hooks/numberFormatter';
+//@ts-ignore
+import * as skins from '../assets/skins/';
 
 const Home = () => {
     const golds = useAppSelector(state => state.golds.value);
@@ -11,6 +13,7 @@ const Home = () => {
     const inventory = useAppSelector(state => state.golds.inventory);
     const AH = useAppSelector(state => state.golds.AH);
     const crit = useAppSelector(state => state.golds.crit);
+    const skin = useAppSelector(state => state.golds.skin);
     const [showGolds, setShowGolds] = useState('');
     const [showGps, setShowGps] = useState('');
     const dispatch = useAppDispatch();
@@ -38,7 +41,7 @@ const Home = () => {
                 </View>
             </View>
             <TouchableWithoutFeedback onPress={() => click > 1 ? handleClick() : dispatch(increment())}>
-                <Image source={require('../assets/skins/Twitch_0.jpg')} style={styles.twitch} />
+                <Image source={skins[skin]} style={styles.twitch} />
             </TouchableWithoutFeedback>
             <View nativeID='items-spells' style={styles.itemsSpells}>
                 <View nativeID='items'>
